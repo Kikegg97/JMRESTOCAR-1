@@ -44,7 +44,7 @@
                     <input type="text" placeholder="Nombre Completo" name="nombre_completo"> 
                     <input type="text" placeholder="Correo Electronico" name="correo">
                     <input type="text" placeholder="Usuario" name="usuario">
-                    <input type="password" placeholder="Contraseña" name="contrasena">
+                    <input type="password" placeholder="Contraseña" name="contraseña">
                     <button>Resgistrarse</button>
                 </form>
 

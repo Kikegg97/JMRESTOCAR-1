@@ -1,9 +1,17 @@
 <?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "login_register_bd";
 
-    $conexion = mysqli_connect("localhost", "root", "", "login_register_BD");
-    /*if($conexion){
-        echo 'Conectado exitosamente';
-    }else{
-        echo 'No se pudo conectar a la base de datos';
-    }*/
+// Crear conexión
+$conexion = new mysqli($servername, $username, $password, $database);
+
+// Verificar conexión
+if ($conexion->connect_error) {
+    die("Error de conexión: " . $conexion->connect_error);
+} else {
+    echo "Conexión exitosa";
+}
 ?>
+

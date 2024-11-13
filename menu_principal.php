@@ -1,19 +1,17 @@
 <?php
-    session_start();
+session_start();
 
-    if(!isset($_SESSION['usuario'])){
-        echo '
-            <script>
-                alert("Por favor debes iniciar sesión");
-                window.location = "index.php";
-            </script>
-        ';
-        //header("location: index.php");
-        session_destroy();
-        die();
-        
-    }
+if (!isset($_SESSION['usuario'])) {
+    echo '
+        <script>
+            alert("Por favor debes iniciar sesión");
+            window.location = "index.php";
+        </script>
+    ';
     session_destroy();
+    die();
+}
+// No destruyas la sesión aquí; permite que el usuario navegue mientras está logueado.
 ?>
 
 <!DOCTYPE html>
@@ -35,65 +33,13 @@
         </header>
         <main>
             <div class="menu">
-                <div class="menu">
-                    <div class="menu-item">
-                        <img src="IMG/image.png" alt="Dish 1">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                        <span>S/. **.**</span>
-                        <button class="info-button">Más información</button>
-                        <div class="popup">
-                            <img src="IMG/image.png" alt="Dish 1">
-                            <h3>Detalle del Platillo</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
-                            <span>S/. **.**</span>
-                            <button class="close-button">Cerrar</button>
-                        </div>
-                    </div>              
-                <div class="menu-item">
-                    <img src="IMG/image (1).png" alt="Dish 1">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                    <span>S/. **.**</span>
-                    <button class="info-button">Más información</button>
-                        <div class="popup">
-                            <img src="IMG/image (1).png" alt="Dish 1">
-                            <h3>Detalle del Platillo</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
-                            <span>S/. **.**</span>
-                            <button class="close-button">Cerrar</button>
-                        </div>
-                </div>
-                <div class="menu-item">
-                    <img src="IMG/image (2).png" alt="Dish 1">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                    <span>S/. **.**</span>
-                    <button class="info-button">Más información</button>
-                        <div class="popup">
-                            <img src="IMG/image (2).png" alt="Dish 1">
-                            <h3>Detalle del Platillo</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
-                            <span>S/. **.**</span>
-                            <button class="close-button">Cerrar</button>
-                        </div>
-                </div>
-                <div class="menu-item">
-                    <img src="IMG/image (3).png" alt="Dish 1">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                    <span>S/. **.**</span>
-                    <button class="info-button">Más información</button>
-                        <div class="popup">
-                            <img src="IMG/image (3).png" alt="Dish 1">
-                            <h3>Detalle del Platillo</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
-                            <span>S/. **.**</span>
-                            <button class="close-button">Cerrar</button>
-                        </div>
-                </div>
+                <!-- Ejemplo de items de menú -->
                 <div class="menu-item">
                     <img src="IMG/image.png" alt="Dish 1">
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
                     <span>S/. **.**</span>
                     <button class="info-button">Más información</button>
-                    <div class="popup">
+                    <div class="popup" style="display: none;">
                         <img src="IMG/image.png" alt="Dish 1">
                         <h3>Detalle del Platillo</h3>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
@@ -102,61 +48,43 @@
                     </div>
                 </div>              
                 <div class="menu-item">
-                    <img src="IMG/image (1).png" alt="Dish 1">
+                    <img src="IMG/image (1).png" alt="Dish 2">
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
                     <span>S/. **.**</span>
                     <button class="info-button">Más información</button>
-                        <div class="popup">
-                            <img src="IMG/image (1).png" alt="Dish 1">
-                            <h3>Detalle del Platillo</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
-                            <span>S/. **.**</span>
-                            <button class="close-button">Cerrar</button>
-                        </div>
+                    <div class="popup" style="display: none;">
+                        <img src="IMG/image (1).png" alt="Dish 2">
+                        <h3>Detalle del Platillo</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+                        <span>S/. **.**</span>
+                        <button class="close-button">Cerrar</button>
+                    </div>
                 </div>
-                <div class="menu-item">
-                    <img src="IMG/image (2).png" alt="Dish 1">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                    <span>S/. **.**</span>
-                    <button class="info-button">Más información</button>
-                        <div class="popup">
-                            <img src="IMG/image (2).png" alt="Dish 1">
-                            <h3>Detalle del Platillo</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
-                            <span>S/. **.**</span>
-                            <button class="close-button">Cerrar</button>
-                        </div>
-                </div>
-                <div class="menu-item">
-                    <img src="IMG/image (3).png" alt="Dish 1">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                    <span>S/. **.**</span>
-                    <button class="info-button">Más información</button>
-                        <div class="popup">
-                            <img src="IMG/image (3).png" alt="Dish 1">
-                            <h3>Detalle del Platillo</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
-                            <span>S/. **.**</span>
-                            <button class="close-button">Cerrar</button>
-                        </div>
-                </div>
+                <!-- Añade más elementos de menú si es necesario -->
             </div>
         </main>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Selecciona todos los botones de "Más información" y de "Cerrar"
             const infoButtons = document.querySelectorAll('.info-button');
-            const closeButtons = document.querySelectorAll('.close-button');
 
             infoButtons.forEach(button => {
                 button.addEventListener('click', function() {
+                    // Cierra todos los popups abiertos antes de abrir el nuevo
+                    document.querySelectorAll('.popup').forEach(popup => {
+                        popup.style.display = 'none';
+                    });
+
+                    // Muestra el popup correspondiente al botón clicado
                     const popup = this.nextElementSibling;
                     popup.style.display = 'block';
                 });
             });
 
-            closeButtons.forEach(button => {
+            // Agrega el evento de cierre a cada botón "Cerrar" dentro del popup
+            document.querySelectorAll('.close-button').forEach(button => {
                 button.addEventListener('click', function() {
                     const popup = this.parentElement;
                     popup.style.display = 'none';
@@ -164,6 +92,5 @@
             });
         });
     </script>    
-        
 </body>
 </html>
