@@ -1,61 +1,56 @@
 <?php
 
-    include 'conexion_be.php';
+include 'conexion_be.php';
 
-    $nombre_completo = $_POST['nombre_completo'];
-    $correo = $_POST['correo'];
-    $usuario = $_POST['usuario'];
-    $contraseña = $_POST['contraseña'];
+// Recibir y limpiar datos del formulario
+$nombre_completo = mysqli_real_escape_string($conexion, $_POST['nombre_completo']);
+$correo = mysqli_real_escape_string($conexion, $_POST['correo']);
+$usuario = mysqli_real_escape_string($conexion, $_POST['usuario']);
+$contraseña = mysqli_real_escape_string($conexion, $_POST['contraseña']);
 
-    //Encriptacion de las contraseñas 
-    //$contrasena = hash('sha512', $contrasena);
+// Verificar que el correo tenga un formato válido
+if (!preg_match("/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/", $correo)) {
+    mostrar_alerta_y_redireccionar("Por favor, ingresa un correo válido", "../menu_principal.php");
+}
 
-    $query = "INSERT INTO usuarios(nombre_completo, correo, usuario, contraseña) 
-                VALUES('$nombre_completo', '$correo', '$usuario', '$contraseña')";
-    
-    //verificar que el correo no se repita
-    $verificar_correo = mysqli_query($conexion, "SELECT * FROM usuarios WHERE correo='$correo'");
+// Verificación de correos repetidos
+$verificar_correo = mysqli_query($conexion, "SELECT correo FROM usuarios WHERE correo='$correo'");
+if (mysqli_num_rows($verificar_correo) > 0) {
+    mostrar_alerta_y_redireccionar("Este correo ya está registrado, intenta con otro diferente", "../menu_principal.php");
+}
 
-    if(mysqli_num_rows($verificar_correo) > 0){
-        echo '
-            <script>
-                alert("Este correo ya esta registrado, intenta con otro diferente");
-                window.location = "../menu_principal.php";
-            </script>
-        ';
-        exit();
-    }
+// Verificación de usuarios repetidos
+$verificar_usuario = mysqli_query($conexion, "SELECT usuario FROM usuarios WHERE usuario='$usuario'");
+if (mysqli_num_rows($verificar_usuario) > 0) {
+    mostrar_alerta_y_redireccionar("Este usuario ya está registrado, intenta con otro diferente", "../menu_principal.php");
+}
 
-    //verificar que el nombre de usuario no se repita 
-    $verificar_usuario = mysqli_query($conexion, "SELECT * FROM usuarios WHERE usuario='$usuario'");
+// Encriptar la contraseña antes de almacenarla
+$contraseña_hashed = password_hash($contraseña, PASSWORD_BCRYPT);
 
-    if(mysqli_num_rows($verificar_usuario) > 0){
-        echo '
-            <script>
-                alert("Este usuario ya esta registrado, intenta con otro diferente");
-                window.location = "../menu_principal.php";
-            </script>
-        ';
-        exit();
-    }
-    //notificacion del registro en la BD
-    $ejecutar = mysqli_query($conexion, $query);
+// Inserción de usuario en la base de datos
+$query = "INSERT INTO usuarios(nombre_completo, correo, usuario, contraseña) 
+          VALUES('$nombre_completo', '$correo', '$usuario', '$contraseña_hashed')";
+$ejecutar = mysqli_query($conexion, $query);
 
-    if($ejecutar){
-        echo '
-            <script>
-                alert("Usuario alamcenado exitosamente");
-                window.location = "../menu.php";
-            </script>
-        ';
-    }else{
-        echo '
-            <script>
-                alert("Intentalo de Nuevo Usuario no almacenado");
-                window.location = "../menu_principal.php";
-            </script>
-        ';
-    }
+if ($ejecutar) {
+    mostrar_alerta_y_redireccionar("Usuario almacenado exitosamente", "../menu.php");
+} else {
+    mostrar_alerta_y_redireccionar("Inténtalo de nuevo. Usuario no almacenado", "../menu_principal.php");
+}
 
-    mysqli_close($conexion);
+// Cerrar la conexión
+mysqli_close($conexion);
+
+// Función para mostrar alerta y redirigir
+function mostrar_alerta_y_redireccionar($mensaje, $url) {
+    echo "
+        <script>
+            alert('$mensaje');
+            window.location = '$url';
+        </script>
+    ";
+    exit();
+}
+
 ?>
