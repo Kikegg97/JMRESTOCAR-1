@@ -1,58 +1,61 @@
 <?php
-include 'conexion_be.php'; // Incluye la conexión
 
-$nombre_completo = $_POST['nombre_completo'];
-$correo = $_POST['correo'];
-$usuario = $_POST['usuario'];
-$contraseña = $_POST['contraseña'];
+    include 'conexion_be.php';
 
-// Encriptación de la contraseña (opcional)
-// $contrasena = hash('sha512', $contrasena);
+    $nombre_completo = $_POST['nombre_completo'];
+    $correo = $_POST['correo'];
+    $usuario = $_POST['usuario'];
+    $contraseña = $_POST['contraseña'];
 
-$query = "INSERT INTO usuarios(nombre_completo, correo, usuario, contraseña) 
-          VALUES('$nombre_completo', '$correo', '$usuario', '$contraseña')";
+    //Encriptacion de las contraseñas 
+    //$contrasena = hash('sha512', $contrasena);
 
-// Verificar que el correo no se repita
-$verificar_correo = mysqli_query($conexion, "SELECT * FROM usuarios WHERE correo='$correo'");
-if (mysqli_num_rows($verificar_correo) > 0) {
-    echo '
-        <script>
-            alert("Este correo ya está registrado, intenta con otro diferente");
-            window.location = "../menu_principal.php";
-        </script>
-    ';
-    exit();
-}
+    $query = "INSERT INTO usuarios(nombre_completo, correo, usuario, contraseña) 
+                VALUES('$nombre_completo', '$correo', '$usuario', '$contraseña')";
+    
+    //verificar que el correo no se repita
+    $verificar_correo = mysqli_query($conexion, "SELECT * FROM usuarios WHERE correo='$correo'");
 
-// Verificar que el nombre de usuario no se repita
-$verificar_usuario = mysqli_query($conexion, "SELECT * FROM usuarios WHERE usuario='$usuario'");
-if (mysqli_num_rows($verificar_usuario) > 0) {
-    echo '
-        <script>
-            alert("Este usuario ya está registrado, intenta con otro diferente");
-            window.location = "../menu_principal.php";
-        </script>
-    ';
-    exit();
-}
+    if(mysqli_num_rows($verificar_correo) > 0){
+        echo '
+            <script>
+                alert("Este correo ya esta registrado, intenta con otro diferente");
+                window.location = "../menu_principal.php";
+            </script>
+        ';
+        exit();
+    }
 
-// Ejecutar la inserción
-$ejecutar = mysqli_query($conexion, $query);
-if ($ejecutar) {
-    echo '
-        <script>
-            alert("Usuario almacenado exitosamente");
-            window.location = "../menu.php";
-        </script>
-    ';
-} else {
-    echo '
-        <script>
-            alert("Error al almacenar el usuario: ' . mysqli_error($conexion) . '");
-            window.location = "../menu_principal.php";
-        </script>
-    ';
-}
+    //verificar que el nombre de usuario no se repita 
+    $verificar_usuario = mysqli_query($conexion, "SELECT * FROM usuarios WHERE usuario='$usuario'");
 
-mysqli_close($conexion); // Cierra la conexión
+    if(mysqli_num_rows($verificar_usuario) > 0){
+        echo '
+            <script>
+                alert("Este usuario ya esta registrado, intenta con otro diferente");
+                window.location = "../menu_principal.php";
+            </script>
+        ';
+        exit();
+    }
+    //notificacion del registro en la BD
+    $ejecutar = mysqli_query($conexion, $query);
+
+    if($ejecutar){
+        echo '
+            <script>
+                alert("Usuario alamcenado exitosamente");
+                window.location = "../menu.php";
+            </script>
+        ';
+    }else{
+        echo '
+            <script>
+                alert("Intentalo de Nuevo Usuario no almacenado");
+                window.location = "../menu_principal.php";
+            </script>
+        ';
+    }
+
+    mysqli_close($conexion);
 ?>

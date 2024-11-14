@@ -128,25 +128,35 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const infoButtons = document.querySelectorAll('.info-button');
-            const closeButtons = document.querySelectorAll('.close-button');
+    document.addEventListener('DOMContentLoaded', function() {
+        const infoButtons = document.querySelectorAll('.info-button');
+        const closeButtons = document.querySelectorAll('.close');
+        const popups = document.querySelectorAll('.popup');
 
-            infoButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const popup = this.nextElementSibling;
-                    popup.style.display = 'block';
-                });
-            });
-
-            closeButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const popup = this.parentElement;
-                    popup.style.display = 'none';
-                });
+        infoButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const popup = this.nextElementSibling;
+                popup.style.display = 'block';
             });
         });
-    </script>    
+
+        closeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const popup = this.parentElement;
+                popup.style.display = 'none';
+            });
+        });
+
+        // Cerrar el pop-up al hacer clic fuera de él
+        document.addEventListener('click', function(event) {
+            popups.forEach(popup => {
+                if (popup.style.display === 'block' && !popup.contains(event.target) && !event.target.classList.contains('info-button')) {
+                    popup.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>    
         
 </body>
 </html>
