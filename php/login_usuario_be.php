@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 include 'conexion_be.php';
 
 // Recibir y limpiar datos del formulario
@@ -18,8 +17,9 @@ if (mysqli_num_rows($result) > 0) {
     // Verificar la contraseña encriptada
     if (password_verify($contraseña, $usuario['contraseña'])) {
         // Si la contraseña es correcta, iniciar sesión
-        $_SESSION['usuario'] = $correo;
-        header("location: ../menu.php");
+        $_SESSION['usuario_id'] = $usuario['id']; // Guardar el ID del usuario en la sesión
+        $_SESSION['usuario'] = $correo; // Opcional: guardar también el correo en la sesión
+        header("location: ../menu.php"); // Redirigir al usuario a la página principal o menú
         exit;
     } else {
         // Si la contraseña es incorrecta

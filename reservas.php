@@ -1,4 +1,15 @@
 <?php
+session_start(); // Iniciar la sesión
+
+// Verificar que el usuario está autenticado
+if (!isset($_SESSION['usuario_id'])) {
+    echo json_encode(["status" => "error", "message" => "Usuario no autenticado. Por favor, inicia sesión."]);
+    exit();
+}
+
+// Obtener el ID del usuario autenticado desde la sesión
+$usuario_id = $_SESSION['usuario_id'];
+
 // Verificar si el formulario fue enviado (si hay datos en $_POST)
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
@@ -10,27 +21,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             die("Error de conexión: " . $conexion->connect_error);
         }
 
-        // Obtener mesas y cantidad de sillas para usarlas en el frontend
-        $sql_mesas = "SELECT id, numero, cantidad_sillas FROM mesas";
-        $result_mesas = $conexion->query($sql_mesas);
-
-        $mesas_data = [];
-        if ($result_mesas->num_rows > 0) {
-            while ($row = $result_mesas->fetch_assoc()) {
-                $mesas_data[] = $row;
-            }
-        }
-
-        // Codificar los datos de las mesas a JSON para JavaScript
-        $mesas_json = json_encode($mesas_data);
-
         // Obtener los datos del formulario
-        $usuario_id = 1; // ID de usuario, reemplazar con el ID real del usuario autenticado
         $mesa_id = $_POST['selectedTable'];
         $fecha = $_POST['date'];
         $hora = $_POST['time'];
 
-        // Verificar si la mesa seleccionada existe en la tabla `mesas`
+        // Verificar si la mesa seleccionada existe en la tabla mesas
         $sql_check_mesa = "SELECT * FROM mesas WHERE id = ?";
         $stmt_check_mesa = $conexion->prepare($sql_check_mesa);
         $stmt_check_mesa->bind_param("i", $mesa_id);
@@ -40,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if ($result_check_mesa->num_rows == 0) {
             echo json_encode(["status" => "error", "message" => "La mesa seleccionada no existe."]);
         } else {
-            // Verificar disponibilidad de la mesa en la tabla `reservas`
+            // Verificar disponibilidad de la mesa en la tabla reservas
             $sql_check = "SELECT * FROM reservas WHERE mesa_id = ? AND fecha = ? AND hora = ?";
             $stmt_check = $conexion->prepare($sql_check);
             $stmt_check->bind_param("iss", $mesa_id, $fecha, $hora);
@@ -79,6 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     exit(); // Terminar script después de procesar la solicitud AJAX
 }
 ?>
+
 
 
 <!DOCTYPE html>
@@ -168,43 +165,39 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </footer>
 
     <script>
-    // Seleccionar todas las mesas y el campo de información de sillas
-    const tables = document.querySelectorAll('.table');
-    const selectedTableInput = document.getElementById('selectedTable');
-    const sillasInfo = document.getElementById('sillasInfo'); // Asegúrate de que este elemento exista en tu HTML
+        window.onload = function() {
+            // Seleccionar todas las mesas y el campo de información de sillas
+            const tables = document.querySelectorAll('.table');
+            const selectedTableInput = document.getElementById('selectedTable');
+            const sillasInfo = document.getElementById('sillasInfo'); // Asegúrate de que este elemento exista en tu HTML
 
-    // Agregar un evento de clic a cada mesa
-    tables.forEach(table => {
-        table.addEventListener('click', function() {
-            // Evitar selección si la mesa está reservada
-            if (this.classList.contains('reserved')) {
-                alert("Esta mesa ya está reservada.");
-                return;
-            }
-            
-            // Desmarcar todas las mesas seleccionadas
-            tables.forEach(t => t.classList.remove('selected'));
-            
-            // Marcar la mesa seleccionada
-            this.classList.add('selected');
-            
-            // Guardar el número de mesa seleccionada en el campo oculto
-            selectedTableInput.value = this.dataset.table;
-
-            // Actualizar la información de sillas usando plantilla de cadena
-            const numSillas = this.dataset.sillas;
-            sillasInfo.textContent = `La mesa seleccionada tiene ${numSillas} sillas.`;
-        });
-    });
-
-    // Validación para asegurarse de que se seleccione una mesa
-    document.getElementById('reservationForm').addEventListener('submit', function(event) {
-        if (!selectedTableInput.value) {
-            alert("Por favor, selecciona una mesa antes de confirmar la reserva.");
-            event.preventDefault();
-        }
-    });
-</script>
+            // Agregar un evento de clic a cada mesa
+            tables.forEach(table => {
+                table.addEventListener('click', function() {
+                    console.log("Mesa seleccionada:", this.dataset.table); // Debug para confirmar el click
+                    // Evitar selección si la mesa está reservada
+                    if (this.classList.contains('reserved')) {
+                        alert("Esta mesa ya está reservada.");
+                        return;
+                    }
+                    
+                    // Desmarcar todas las mesas seleccionadas
+                    tables.forEach(t => t.classList.remove('selected'));
+                    
+                    // Marcar la mesa seleccionada
+                    this.classList.add('selected');
+                    
+                    // Guardar el número de mesa seleccionada en el campo oculto
+                    const mesaId = this.dataset.table;
+                    selectedTableInput.value = mesaId;
+                    
+                    // Mostrar la cantidad de sillas de la mesa seleccionada
+                    const numSillas = this.dataset.sillas || "N/A";
+                    sillasInfo.textContent = `La mesa seleccionada tiene ${numSillas} sillas.`;
+                });
+            });
+        };
+    </script>
 
 </body>
 </html>
