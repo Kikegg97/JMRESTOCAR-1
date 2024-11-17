@@ -29,7 +29,7 @@
         <header>
             <h1>ReservApp</h1>
             <div class="buttons">
-                <a href="reserva_mesa.html"><button>Reservar</button></a>
+                <a href="index.php"><button>Reservar</button></a>
                 <a href="index.php"><button>Iniciar sesión/Registro</button></a>
             </div>
         </header>
