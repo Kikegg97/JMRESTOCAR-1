@@ -111,7 +111,32 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <h1>Reservar Mesa</h1>
             <form id="reservationForm" method="POST">
                 <label for="time">Selecciona la hora:</label>
-                <input type="time" id="time" name="time" required>
+                <select id="time" name="time" required>
+                <option value="11:00">11:00</option>
+                <option value="11:30">11:30</option>
+                <option value="12:00">12:00</option>
+                <option value="12:30">12:30</option>
+                <option value="13:00">13:00</option>
+                <option value="13:30">13:30</option>
+                <option value="14:00">14:00</option>
+                <option value="14:30">14:30</option>
+                <option value="15:00">15:00</option>
+                <option value="15:30">15:30</option>
+                <option value="16:00">16:00</option>
+                <option value="16:00">16:30</option>
+                <option value="13:30">17:00</option>
+                <option value="13:30">17:30</option>
+                <option value="13:30">18:00</option>
+                <option value="13:30">18:30</option>
+                <option value="13:30">19:00</option>
+                <option value="13:30">19:30</option>
+                <option value="13:30">20:00</option>
+                <option value="13:30">20:30</option>
+                <option value="13:30">21:00</option>
+                <option value="21:30">21:30</option>
+                <option value="22:00">22:00</option>
+        </select>
+
 
                 <label for="date">Selecciona la fecha:</label>
                 <input type="date" id="date" name="date" required>
@@ -125,6 +150,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <div class="table available" data-table="2" data-sillas="6">Mesa 2</div>
                     <div class="table available" data-table="3" data-sillas="4">Mesa 3</div>
                     <div class="table available" data-table="4" data-sillas="8">Mesa 4</div>
+                </div>
+                <div class="tables">
                     <div class="table available" data-table="5" data-sillas="10">Mesa 5</div>
                     <div class="table available" data-table="6" data-sillas="4">Mesa 6</div>
                     <div class="table available" data-table="7" data-sillas="8">Mesa 7</div>
@@ -153,9 +180,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     alert("Esta mesa ya está reservada.");
                     return;
                 }
-                
+
                 tables.forEach(t => t.classList.remove('selected'));
                 this.classList.add('selected');
+
+
                 selectedTableInput.value = this.dataset.table;
 
                 const numSillas = this.dataset.sillas;
@@ -164,9 +193,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         });
 
         document.getElementById('reservationForm').addEventListener('submit', function(event) {
+
+            const timeInput = document.getElementById('time');
+            const selectedTime = timeInput.value;
+
+            if(!selectedTime){
+                alert("Por favor, selecciona una hora antes de confirmar la reserva.");
+                event.preventDefault();
+                return;
+            }
+
             if (!selectedTableInput.value) {
                 alert("Por favor, selecciona una mesa antes de confirmar la reserva.");
                 event.preventDefault();
+                return;
             }
         });
     </script>
