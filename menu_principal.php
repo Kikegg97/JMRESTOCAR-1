@@ -46,7 +46,7 @@
                             <h3>Detalle del Platillo</h3>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
                             <span>S/. **.**</span>
-                            <button class="close-button">Cerrar</button>
+                            
                         </div>
                     </div>              
                 <div class="menu-item">
@@ -59,7 +59,6 @@
                             <h3>Detalle del Platillo</h3>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
                             <span>S/. **.**</span>
-                            <button class="close-button">Cerrar</button>
                         </div>
                 </div>
                 <div class="menu-item">
@@ -72,7 +71,6 @@
                             <h3>Detalle del Platillo</h3>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
                             <span>S/. **.**</span>
-                            <button class="close-button">Cerrar</button>
                         </div>
                 </div>
                 <div class="menu-item">
@@ -85,7 +83,6 @@
                             <h3>Detalle del Platillo</h3>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
                             <span>S/. **.**</span>
-                            <button class="close-button">Cerrar</button>
                         </div>
                 </div>
                 <div class="menu-item">
@@ -98,7 +95,6 @@
                         <h3>Detalle del Platillo</h3>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
                         <span>S/. **.**</span>
-                        <button class="close-button">Cerrar</button>
                     </div>
                 </div>              
                 <div class="menu-item">
@@ -111,7 +107,6 @@
                             <h3>Detalle del Platillo</h3>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
                             <span>S/. **.**</span>
-                            <button class="close-button">Cerrar</button>
                         </div>
                 </div>
                 <div class="menu-item">
@@ -124,7 +119,6 @@
                             <h3>Detalle del Platillo</h3>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
                             <span>S/. **.**</span>
-                            <button class="close-button">Cerrar</button>
                         </div>
                 </div>
                 <div class="menu-item">
@@ -137,7 +131,6 @@
                             <h3>Detalle del Platillo</h3>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
                             <span>S/. **.**</span>
-                            <button class="close-button">Cerrar</button>
                         </div>
                 </div>
             </div>
